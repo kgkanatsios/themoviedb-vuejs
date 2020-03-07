@@ -1,32 +1,75 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <div class="bg-teal-800">
+      <div class="container mx-auto">
+        <nav class="flex items-center justify-between flex-wrap p-3">
+          <div class="flex items-center flex-shrink-0 text-white mr-6">
+            <span class="font-semibold text-xl tracking-tight"
+              >The Movie DB API - VueJS</span
+            >
+          </div>
+          <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
+            <div class="text-lg lg:flex-grow">
+              <router-link
+                to="/"
+                class="block mt-4 lg:inline-block lg:mt-0 hover:text-teal-200 text-white px-4"
+                exact
+                >Home</router-link
+              >
+              <router-link
+                to="/movies"
+                class="block mt-4 lg:inline-block lg:mt-0 hover:text-teal-200 text-white px-4"
+                exact
+                >Movies</router-link
+              >
+              <router-link
+                to="/about"
+                class="block mt-4 lg:inline-block lg:mt-0 hover:text-teal-200 text-white px-4"
+                exact
+                >About</router-link
+              >
+            </div>
+          </div>
+          <div class="block flex-grow lg:items-center">
+            <select
+              @change="updateCurrentLanguage($event)"
+              class="float-right appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+            >
+              <option
+                v-for="(language, index) in languageList"
+                :value="language.value"
+                :key="index"
+                :selected="language.value == languageCurrent.value"
+                >{{ language.label }}</option
+              >
+            </select>
+          </div>
+        </nav>
+      </div>
     </div>
-    <router-view />
+    <div class="container mx-auto">
+      <router-view />
+    </div>
   </div>
 </template>
-
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
+<script>
+import { mapActions, mapGetters } from "vuex";
+export default {
+  name: "App",
+  computed: {
+    ...mapGetters(["languageCurrent", "languageList"])
+  },
+  methods: {
+    ...mapActions({
+      changeCurrentLanguage: "changeCurrentLanguage",
+      fetchLanguages: "fetchLanguages"
+    }),
+    updateCurrentLanguage(event) {
+      this.changeCurrentLanguage(event.target.value);
     }
+  },
+  created() {
+    this.fetchLanguages();
   }
-}
-</style>
+};
+</script>
