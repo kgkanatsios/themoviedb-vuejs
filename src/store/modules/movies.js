@@ -3,33 +3,27 @@ import languages from "./languages";
 
 const state = {
   movies: [],
-  page: null,
-
+  page: null
 };
 
 const mutations = {
-  SET_MOVIES(
-    state, {
-      movies
-    }
-  ) {
+  SET_MOVIES(state, { movies }) {
     state.movies = movies;
   },
-  SET_PAGE(
-    state, {
-      page
-    }
-  ) {
+  SET_PAGE(state, { page }) {
     state.page = page;
   }
 };
 
 const actions = {
-  fetchNowPlayingMovies: ({
-    commit
-  }) => {
+  fetchNowPlayingMovies: ({ commit }) => {
     let lang = languages.getters.languageCurrent(languages.state);
-    Axios.get("/movie/now_playing?api_key=" + process.env.VUE_APP_TMDB_API_KEY + "&language=" + lang.value)
+    Axios.get(
+      "/movie/now_playing?api_key=" +
+        process.env.VUE_APP_TMDB_API_KEY +
+        "&language=" +
+        lang.value
+    )
       .then(res => {
         commit("SET_MOVIES", {
           movies: res.data.results
@@ -39,7 +33,7 @@ const actions = {
         });
       })
       .catch(error => console.log(error));
-  },
+  }
 };
 const getters = {
   movies: state => {
