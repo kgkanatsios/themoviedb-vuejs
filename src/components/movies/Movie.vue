@@ -1,19 +1,24 @@
 <template>
-  <div class="movie max-w-sm w-full lg:max-w-full lg:flex">
+  <div class="movie shadow-md flex w-full mb-4">
     <div
-      class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-      :style="{
-        backgroundImage:
-          'url(https://image.tmdb.org/t/p/original' + movie.poster_path + ')'
-      }"
-      :title="movie.original_title"
-    ></div>
+      class="h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+    >
+      <img
+        :src="'https://image.tmdb.org/t/p/original' + movie.poster_path"
+        :alt="movie.original_title"
+      />
+    </div>
     <div
-      class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal"
+      class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col w-full justify-between leading-normal"
     >
       <div class="mb-8">
-        <p class="text-sm text-gray-600 flex items-center">
-          {{ movie.vote_average }}
+        <p
+          class="text-sm text-gray-600 flex content-center items-center text-yellow-400 hover:text-yellow-600 font-bold"
+        >
+          <font-awesome-icon icon="star"></font-awesome-icon>
+          <span class="ml-1 text-black"
+            >{{ movie.vote_average }} ({{ movie.vote_count }})</span
+          >
         </p>
         <div class="text-gray-900 font-bold text-xl mb-2">
           {{ movie.original_title }}
@@ -23,14 +28,9 @@
         </p>
       </div>
       <div class="flex items-center">
-        <img
-          class="w-10 h-10 rounded-full mr-4"
-          :src="'https://image.tmdb.org/t/p/original' + movie.poster_path"
-          :title="movie.original_title"
-        />
         <div class="text-sm">
-          <p class="text-gray-900 leading-none">Jonathan Reinink</p>
-          <p class="text-gray-600">{{ movie.release_date }}</p>
+          <font-awesome-icon icon="calendar-alt"></font-awesome-icon>
+          <span class="ml-1 text-black">{{ movie.release_date }}</span>
         </div>
       </div>
     </div>

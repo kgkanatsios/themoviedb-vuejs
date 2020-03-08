@@ -16,12 +16,28 @@ const routes = [
     component: () => import("../views/Movies.vue")
   },
   {
+    name: "LatestMovies",
+    path: "/movies/latest",
+    component: () => import("../components/movies/LatestMovies.vue")
+  },
+  {
+    name: "NowPlayingMovies",
+    path: "/movies/now-playing",
+    component: () => import("../components/movies/NowPlayingMovies.vue")
+  },
+  {
+    name: "PopularMovies",
+    path: "/movies/popular",
+    component: () => import("../components/movies/PopularMovies.vue")
+  },
+  {
     path: "/about",
     name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () => import("../views/About.vue")
+  },
+  {
+    path: "*",
+    redirect: "/"
   }
 ];
 

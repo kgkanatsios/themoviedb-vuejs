@@ -33,6 +33,78 @@ const actions = {
         });
       })
       .catch(error => console.log(error));
+  },
+  fetchLatestMovies: ({ commit }) => {
+    let lang = languages.getters.languageCurrent(languages.state);
+    Axios.get(
+      "/movie/latest?api_key=" +
+        process.env.VUE_APP_TMDB_API_KEY +
+        "&language=" +
+        lang.value
+    )
+      .then(res => {
+        commit("SET_MOVIES", {
+          movies: res.data.results
+        });
+        commit("SET_PAGE", {
+          page: res.data.page
+        });
+      })
+      .catch(error => console.log(error));
+  },
+  fetchPopularMovies: ({ commit }) => {
+    let lang = languages.getters.languageCurrent(languages.state);
+    Axios.get(
+      "/movie/popular?api_key=" +
+        process.env.VUE_APP_TMDB_API_KEY +
+        "&language=" +
+        lang.value
+    )
+      .then(res => {
+        commit("SET_MOVIES", {
+          movies: res.data.results
+        });
+        commit("SET_PAGE", {
+          page: res.data.page
+        });
+      })
+      .catch(error => console.log(error));
+  },
+  fetchTopRatedMovies: ({ commit }) => {
+    let lang = languages.getters.languageCurrent(languages.state);
+    Axios.get(
+      "/movie/top_rated?api_key=" +
+        process.env.VUE_APP_TMDB_API_KEY +
+        "&language=" +
+        lang.value
+    )
+      .then(res => {
+        commit("SET_MOVIES", {
+          movies: res.data.results
+        });
+        commit("SET_PAGE", {
+          page: res.data.page
+        });
+      })
+      .catch(error => console.log(error));
+  },
+  fetchUpcomingMovies: ({ commit }) => {
+    let lang = languages.getters.languageCurrent(languages.state);
+    Axios.get(
+      "/movie/upcoming?api_key=" +
+        process.env.VUE_APP_TMDB_API_KEY +
+        "&language=" +
+        lang.value
+    )
+      .then(res => {
+        commit("SET_MOVIES", {
+          movies: res.data.results
+        });
+        commit("SET_PAGE", {
+          page: res.data.page
+        });
+      })
+      .catch(error => console.log(error));
   }
 };
 const getters = {

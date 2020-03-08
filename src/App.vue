@@ -1,9 +1,9 @@
 <template>
   <div id="app">
-    <div class="bg-teal-800">
+    <div class="bg-black shadow-md mb-4">
       <div class="container mx-auto">
         <nav class="flex items-center justify-between flex-wrap p-3">
-          <div class="flex items-center flex-shrink-0 text-white mr-6">
+          <div class="flex items-center flex-shrink-0 text-teal-400 mr-6">
             <span class="font-semibold text-xl tracking-tight"
               >The Movie DB API - VueJS</span
             >
