@@ -43,7 +43,7 @@ const getters = {
     return state.current;
   },
   languageList: state => {
-    return state.list;
+    return state.list.sort((a, b) => (a.label > b.label ? 1 : -1));
   }
 };
 export default {
