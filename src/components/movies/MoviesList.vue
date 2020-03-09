@@ -1,6 +1,10 @@
 <template>
   <div class="movies-list grid gap-6 grid-cols-2">
-    <movie-preview v-for="(movie, index) in movies" v-bind:key="index" v-bind:movie="movie"></movie-preview>
+    <movie-preview
+      v-for="(movie, index) in movies"
+      v-bind:key="index"
+      v-bind:movie="movie"
+    ></movie-preview>
   </div>
 </template>
 
@@ -11,12 +15,17 @@ import MoviePreview from "@/components/movies/MoviePreview.vue";
 export default {
   name: "MoviesList",
   computed: {
-    ...mapGetters(["movies"])
+    ...mapGetters(["movies", "languageCurrent"])
   },
   methods: {
     ...mapActions({
       fetchMovies: "fetchMovies"
     })
+  },
+  watch: {
+    languageCurrent: function() {
+      this.fetchMovies(this.$route.params.listType);
+    }
   },
   created() {
     this.fetchMovies(this.$route.params.listType);
@@ -27,5 +36,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
