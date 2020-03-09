@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  name: "Movie",
+  name: "MoviePreview",
   props: ["movie"]
 };
 </script>

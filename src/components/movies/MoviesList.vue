@@ -1,10 +1,6 @@
 <template>
-  <div class="latest-movies">
-    <movie-preview
-      v-for="(movie, index) in movies"
-      v-bind:key="index"
-      v-bind:movie="movie"
-    ></movie-preview>
+  <div class="movies-list">
+    <movie-preview v-for="(movie, index) in movies" v-bind:key="index" v-bind:movie="movie"></movie-preview>
   </div>
 </template>
 
@@ -13,17 +9,17 @@ import { mapActions, mapGetters } from "vuex";
 import MoviePreview from "@/components/movies/MoviePreview.vue";
 
 export default {
-  name: "NowPlayingMovies",
+  name: "MoviesList",
   computed: {
     ...mapGetters(["movies"])
   },
   methods: {
     ...mapActions({
-      fetchNowPlaying: "fetchNowPlayingMovies"
+      fetchMovies: "fetchMovies"
     })
   },
   created() {
-    this.fetchNowPlaying();
+    this.fetchMovies(this.$route.params.listType);
   },
   components: {
     MoviePreview
@@ -31,4 +27,5 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+</style>

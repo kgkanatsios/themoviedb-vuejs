@@ -3,27 +3,34 @@ import languages from "./languages";
 
 const state = {
   movies: [],
-  page: null
+  page: null,
+  lists: ["now_playing", "popular", "top_rated", "upcoming"]
 };
 
 const mutations = {
-  SET_MOVIES(state, { movies }) {
+  SET_MOVIES(state, {
+    movies
+  }) {
     state.movies = movies;
   },
-  SET_PAGE(state, { page }) {
+  SET_PAGE(state, {
+    page
+  }) {
     state.page = page;
   }
 };
 
 const actions = {
-  fetchNowPlayingMovies: ({ commit }) => {
+  fetchNowPlayingMovies: ({
+    commit
+  }) => {
     let lang = languages.getters.languageCurrent(languages.state);
     Axios.get(
-      "/movie/now_playing?api_key=" +
+        "/movie/now_playing?api_key=" +
         process.env.VUE_APP_TMDB_API_KEY +
         "&language=" +
         lang.value
-    )
+      )
       .then(res => {
         commit("SET_MOVIES", {
           movies: res.data.results
@@ -34,14 +41,16 @@ const actions = {
       })
       .catch(error => console.log(error));
   },
-  fetchLatestMovies: ({ commit }) => {
+  fetchLatestMovies: ({
+    commit
+  }) => {
     let lang = languages.getters.languageCurrent(languages.state);
     Axios.get(
-      "/movie/latest?api_key=" +
+        "/movie/latest?api_key=" +
         process.env.VUE_APP_TMDB_API_KEY +
         "&language=" +
         lang.value
-    )
+      )
       .then(res => {
         commit("SET_MOVIES", {
           movies: res.data.results
@@ -52,14 +61,16 @@ const actions = {
       })
       .catch(error => console.log(error));
   },
-  fetchPopularMovies: ({ commit }) => {
+  fetchPopularMovies: ({
+    commit
+  }) => {
     let lang = languages.getters.languageCurrent(languages.state);
     Axios.get(
-      "/movie/popular?api_key=" +
+        "/movie/popular?api_key=" +
         process.env.VUE_APP_TMDB_API_KEY +
         "&language=" +
         lang.value
-    )
+      )
       .then(res => {
         commit("SET_MOVIES", {
           movies: res.data.results
@@ -70,14 +81,16 @@ const actions = {
       })
       .catch(error => console.log(error));
   },
-  fetchTopRatedMovies: ({ commit }) => {
+  fetchTopRatedMovies: ({
+    commit
+  }) => {
     let lang = languages.getters.languageCurrent(languages.state);
     Axios.get(
-      "/movie/top_rated?api_key=" +
+        "/movie/top_rated?api_key=" +
         process.env.VUE_APP_TMDB_API_KEY +
         "&language=" +
         lang.value
-    )
+      )
       .then(res => {
         commit("SET_MOVIES", {
           movies: res.data.results
@@ -88,14 +101,38 @@ const actions = {
       })
       .catch(error => console.log(error));
   },
-  fetchUpcomingMovies: ({ commit }) => {
+  fetchUpcomingMovies: ({
+    commit
+  }) => {
     let lang = languages.getters.languageCurrent(languages.state);
     Axios.get(
-      "/movie/upcoming?api_key=" +
+        "/movie/upcoming?api_key=" +
         process.env.VUE_APP_TMDB_API_KEY +
         "&language=" +
         lang.value
-    )
+      )
+      .then(res => {
+        commit("SET_MOVIES", {
+          movies: res.data.results
+        });
+        commit("SET_PAGE", {
+          page: res.data.page
+        });
+      })
+      .catch(error => console.log(error));
+  },
+  fetchMovies: ({
+    commit
+  }, listType) => {
+    let lang = languages.getters.languageCurrent(languages.state);
+    listType = (state.lists.find(list => list == listType) === undefined) ? state.lists[0] : listType;
+    console.log(listType);
+    Axios.get(
+        "/movie/" + listType + "?api_key=" +
+        process.env.VUE_APP_TMDB_API_KEY +
+        "&language=" +
+        lang.value
+      )
       .then(res => {
         commit("SET_MOVIES", {
           movies: res.data.results

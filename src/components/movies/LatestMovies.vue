@@ -1,16 +1,9 @@
 <template>
-  <div class="latest-movies">
-    <movie
-      v-for="(movie, index) in movies"
-      v-bind:key="index"
-      v-bind:movie="movie"
-    ></movie>
-  </div>
+  <div class="latest-movies"></div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import Movie from "@/components/movies/Movie.vue";
 
 export default {
   name: "LatestMovies",
@@ -24,9 +17,6 @@ export default {
   },
   created() {
     this.fetchLatest();
-  },
-  components: {
-    Movie
   }
 };
 </script>

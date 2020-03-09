@@ -1,16 +1,16 @@
 <template>
   <div class="popular-movies">
-    <movie
+    <movie-preview
       v-for="(movie, index) in movies"
       v-bind:key="index"
       v-bind:movie="movie"
-    ></movie>
+    ></movie-preview>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import Movie from "@/components/movies/Movie.vue";
+import MoviePreview from "@/components/movies/MoviePreview.vue";
 
 export default {
   name: "PopularMovies",
@@ -26,7 +26,7 @@ export default {
     this.fetchPopular();
   },
   components: {
-    Movie
+    MoviePreview
   }
 };
 </script>
