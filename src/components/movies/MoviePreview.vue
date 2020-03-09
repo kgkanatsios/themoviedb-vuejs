@@ -23,7 +23,9 @@
         <div class="text-gray-900 font-bold text-base mb-2">
           {{ movie.original_title }}
         </div>
-        <p class="text-gray-700 text-sm">{{ movie.overview }}</p>
+        <p class="text-gray-700 text-sm">
+          {{ movie.overview | charactersLimiter(400) }}
+        </p>
       </div>
       <div class="flex items-center pt-2 border-t border-gray-400">
         <div class="text-sm">
