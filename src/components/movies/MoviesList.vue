@@ -1,5 +1,5 @@
 <template>
-  <div class="movies-list">
+  <div class="movies-list grid gap-6 grid-cols-2">
     <movie-preview v-for="(movie, index) in movies" v-bind:key="index" v-bind:movie="movie"></movie-preview>
   </div>
 </template>

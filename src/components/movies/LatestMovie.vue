@@ -1,12 +1,12 @@
 <template>
-  <div class="latest-movies"></div>
+  <div class="latest-movie"></div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from "vuex";
 
 export default {
-  name: "LatestMovies",
+  name: "LatestMovie",
   computed: {
     ...mapGetters(["movies"])
   },
