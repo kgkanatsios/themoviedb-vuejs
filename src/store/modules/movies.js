@@ -48,6 +48,7 @@ const actions = {
       .catch(error => console.log(error));
   },
   fetchMovies: ({ commit, dispatch }, [listType, page = 1]) => {
+    dispatch("setLoading", true);
     let lang = languages.getters.languageCurrent(languages.state);
     listType =
       state.lists.find(list => list == listType) === undefined

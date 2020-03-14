@@ -36,22 +36,18 @@ export default {
   },
   methods: {
     ...mapActions({
-      fetchMovies: "fetchMovies",
-      setLoading: "setLoading"
+      fetchMovies: "fetchMovies"
     }),
     loadNextPage() {
-      this.setLoading(true);
       this.fetchMovies([this.$route.params.listType, this.moviesPage + 1]);
     }
   },
   watch: {
     languageCurrent: function() {
-      this.setLoading(true);
       this.fetchMovies([this.$route.params.listType]);
     }
   },
   created() {
-    this.setLoading(true);
     this.fetchMovies([this.$route.params.listType]);
   },
   components: {
