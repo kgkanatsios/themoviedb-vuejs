@@ -21,12 +21,17 @@
           >
         </p>
         <div class="text-gray-900 font-bold text-base mb-2">
-          <router-link :to="{ name: 'Movie', params: { id: movie.id } }">{{
-            movie.original_title
-          }}</router-link>
+          <router-link
+            :to="{ name: 'Movie', params: { id: movie.id } }"
+            class="hover:text-teal-400 text-teal-500"
+            >{{ movie.title }}
+            <span v-if="movie.title != movie.original_title" class="text-xs"
+              >({{ movie.original_title }})</span
+            ></router-link
+          >
         </div>
         <p class="text-gray-700 text-sm">
-          {{ movie.overview | charactersLimiter(400) }}
+          {{ movie.overview | charactersLimiter(300) }}
         </p>
       </div>
       <div class="flex items-center pt-2 border-t border-gray-400">
