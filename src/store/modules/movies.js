@@ -24,7 +24,7 @@ const mutations = {
 };
 
 const actions = {
-  setLoading: ({ commit }, loading) => {
+  setMoviesLoading: ({ commit }, loading) => {
     commit("SET_MOVIES_LOADING", {
       loading: loading
     });
@@ -48,7 +48,7 @@ const actions = {
       .catch(error => console.log(error));
   },
   fetchMovies: ({ commit, dispatch }, [listType, page = 1]) => {
-    dispatch("setLoading", true);
+    dispatch("setMoviesLoading", true);
     let lang = languages.getters.languageCurrent(languages.state);
     listType =
       state.lists.find(list => list == listType) === undefined
@@ -71,7 +71,7 @@ const actions = {
         commit("SET_MOVIES_PAGE", {
           page: res.data.page
         });
-        dispatch("setLoading", false);
+        dispatch("setMoviesLoading", false);
       })
       .catch(error => console.log(error));
   }

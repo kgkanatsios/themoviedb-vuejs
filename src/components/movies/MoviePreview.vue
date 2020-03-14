@@ -1,5 +1,5 @@
 <template>
-  <div class="movie shadow-md flex w-full">
+  <div class="movie-preview shadow-md flex w-full">
     <div
       class="h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
     >
@@ -21,7 +21,9 @@
           >
         </p>
         <div class="text-gray-900 font-bold text-base mb-2">
-          {{ movie.original_title }}
+          <router-link :to="{ name: 'Movie', params: { id: movie.id } }">{{
+            movie.original_title
+          }}</router-link>
         </div>
         <p class="text-gray-700 text-sm">
           {{ movie.overview | charactersLimiter(400) }}
