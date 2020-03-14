@@ -4,6 +4,7 @@ import languages from "./languages";
 const state = {
   movies: [],
   page: null,
+  loading: false,
   lists: ["now_playing", "popular", "top_rated", "upcoming"]
 };
 
@@ -11,31 +12,24 @@ const mutations = {
   SET_MOVIES(state, { movies }) {
     state.movies = movies;
   },
-  SET_PAGE(state, { page }) {
+  SET_MOVIES_PAGE(state, { page }) {
     state.page = page;
+  },
+  ADD_MOVIES(state, { movies }) {
+    state.movies.push(...movies);
+  },
+  SET_MOVIES_LOADING(state, { loading }) {
+    state.loading = loading;
   }
 };
 
 const actions = {
-  fetchNowPlayingMovies: ({ commit }) => {
-    let lang = languages.getters.languageCurrent(languages.state);
-    Axios.get(
-      "/movie/now_playing?api_key=" +
-        process.env.VUE_APP_TMDB_API_KEY +
-        "&language=" +
-        lang.value
-    )
-      .then(res => {
-        commit("SET_MOVIES", {
-          movies: res.data.results
-        });
-        commit("SET_PAGE", {
-          page: res.data.page
-        });
-      })
-      .catch(error => console.log(error));
+  setLoading: ({ commit }, loading) => {
+    commit("SET_MOVIES_LOADING", {
+      loading: loading
+    });
   },
-  fetchLatestMovies: ({ commit }) => {
+  fetchLatestMovie: ({ commit }) => {
     let lang = languages.getters.languageCurrent(languages.state);
     Axios.get(
       "/movie/latest?api_key=" +
@@ -47,67 +41,13 @@ const actions = {
         commit("SET_MOVIES", {
           movies: res.data.results
         });
-        commit("SET_PAGE", {
+        commit("SET_MOVIES_PAGE", {
           page: res.data.page
         });
       })
       .catch(error => console.log(error));
   },
-  fetchPopularMovies: ({ commit }) => {
-    let lang = languages.getters.languageCurrent(languages.state);
-    Axios.get(
-      "/movie/popular?api_key=" +
-        process.env.VUE_APP_TMDB_API_KEY +
-        "&language=" +
-        lang.value
-    )
-      .then(res => {
-        commit("SET_MOVIES", {
-          movies: res.data.results
-        });
-        commit("SET_PAGE", {
-          page: res.data.page
-        });
-      })
-      .catch(error => console.log(error));
-  },
-  fetchTopRatedMovies: ({ commit }) => {
-    let lang = languages.getters.languageCurrent(languages.state);
-    Axios.get(
-      "/movie/top_rated?api_key=" +
-        process.env.VUE_APP_TMDB_API_KEY +
-        "&language=" +
-        lang.value
-    )
-      .then(res => {
-        commit("SET_MOVIES", {
-          movies: res.data.results
-        });
-        commit("SET_PAGE", {
-          page: res.data.page
-        });
-      })
-      .catch(error => console.log(error));
-  },
-  fetchUpcomingMovies: ({ commit }) => {
-    let lang = languages.getters.languageCurrent(languages.state);
-    Axios.get(
-      "/movie/upcoming?api_key=" +
-        process.env.VUE_APP_TMDB_API_KEY +
-        "&language=" +
-        lang.value
-    )
-      .then(res => {
-        commit("SET_MOVIES", {
-          movies: res.data.results
-        });
-        commit("SET_PAGE", {
-          page: res.data.page
-        });
-      })
-      .catch(error => console.log(error));
-  },
-  fetchMovies: ({ commit }, listType) => {
+  fetchMovies: ({ commit, dispatch }, [listType, page = 1]) => {
     let lang = languages.getters.languageCurrent(languages.state);
     listType =
       state.lists.find(list => list == listType) === undefined
@@ -119,15 +59,18 @@ const actions = {
         "?api_key=" +
         process.env.VUE_APP_TMDB_API_KEY +
         "&language=" +
-        lang.value
+        lang.value +
+        "&page=" +
+        page
     )
       .then(res => {
-        commit("SET_MOVIES", {
+        commit(page == 1 ? "SET_MOVIES" : "ADD_MOVIES", {
           movies: res.data.results
         });
-        commit("SET_PAGE", {
+        commit("SET_MOVIES_PAGE", {
           page: res.data.page
         });
+        dispatch("setLoading", false);
       })
       .catch(error => console.log(error));
   }
@@ -135,6 +78,12 @@ const actions = {
 const getters = {
   movies: state => {
     return state.movies;
+  },
+  moviesPage: state => {
+    return state.page;
+  },
+  moviesLoading: state => {
+    return state.loading;
   }
 };
 
