@@ -17,15 +17,82 @@
           Back
         </button>
       </div>
-      <div class="bg-teal-900 text-white px-4 py-2 font-bold mb-4">
-        <span class="text-xl inline-block align-middle">{{ movie.title }}</span>
-        <span class="text-sm mx-2 inline-block align-middle"
-          >(<font-awesome-icon icon="calendar-alt"></font-awesome-icon>
-          {{ movie.release_date }})</span
-        >
+      <div class="flex align-middle h-full mb-4">
+        <div class="sm:w-1/4 sm:mr-4 w-full">
+          <img
+            :src="'https://image.tmdb.org/t/p/original' + movie.poster_path"
+            :alt="movie.original_title"
+          />
+        </div>
+        <div class="sm:w-3/4 w-full items-center">
+          <div class="mb-1 text-2xl font-bold text-teal-900">
+            {{ movie.title }}
+          </div>
+          <div class="mb-1">{{ movie.tagline }}</div>
+          <div class="w-full my-1 align-middle">
+            {{ movie.overview }}
+          </div>
+          <div
+            class="text-sm flex content-center items-center text-gray-800 -m-2 mt-1"
+          >
+            <div class="flex-1 text-center align-middle m-2">
+              <font-awesome-icon
+                icon="star"
+                class="mr-1 text-yellow-400 hover:text-yellow-600"
+              ></font-awesome-icon>
+              <span class="text-black font-bold"
+                >{{ movie.vote_average }} ({{ movie.vote_count }})</span
+              >
+            </div>
+            <div class="flex-1 text-center align-middle m-2">
+              <font-awesome-icon
+                icon="calendar-alt"
+                class="mr-1"
+              ></font-awesome-icon>
+              <span class="text-black font-bold">{{ movie.release_date }}</span>
+            </div>
+            <div class="flex-1 text-center align-middle m-2">
+              Runtime:
+              <span class="text-black font-bold">{{ movie.runtime }} min</span>
+            </div>
+          </div>
+          <div
+            class="text-sm flex content-center items-center text-gray-800 -m-2"
+          >
+            <div class="flex-1 text-center align-middle m-2">
+              Popularity:
+              <span class="text-black font-bold">{{ movie.popularity }}</span>
+            </div>
+            <div class="flex-1 text-center align-middle m-2">
+              Original Language:
+              <span class="text-black font-bold">{{
+                movie.spoken_languages[0].name
+              }}</span>
+            </div>
+            <div class="flex-1 text-center align-middle m-2">
+              Status:
+              <span class="text-black font-bold">{{ movie.status }}</span>
+            </div>
+          </div>
+          <div class="w-full my-8">
+            <button
+              v-if="movieVideos.length == 0"
+              @click="loadVideo"
+              class="bg-teal-500 hover:bg-teal-400 text-white font-bold py-2 px-4 border-b-4 border-teal-700 hover:border-teal-500 rounded inline-block align-middle"
+            >
+              Load Videos
+            </button>
+            <div class="grid gap-6 grid-cols-2">
+              <component
+                v-for="(video, index) in movieVideos"
+                :is="video.site"
+                v-bind:video="video"
+                v-bind:key="index"
+              />
+            </div>
+          </div>
+        </div>
       </div>
-
-      {{ movie.overview }}
     </div>
     <div v-else class="text-center">
       <div
@@ -39,15 +106,20 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { YouTube, Vimeo } from "@/components/videos";
 export default {
   name: "Movie",
   computed: {
-    ...mapGetters(["movie", "languageCurrent", "movieLoading"])
+    ...mapGetters(["movie", "languageCurrent", "movieLoading", "movieVideos"])
   },
   methods: {
     ...mapActions({
-      fetchMovie: "fetchMovie"
-    })
+      fetchMovie: "fetchMovie",
+      fetchMovieVideos: "fetchMovieVideos"
+    }),
+    loadVideo() {
+      this.fetchMovieVideos(this.movie.id);
+    }
   },
   watch: {
     languageCurrent: function() {
@@ -56,6 +128,10 @@ export default {
   },
   created() {
     this.fetchMovie([this.$route.params.id]);
+  },
+  components: {
+    YouTube,
+    Vimeo
   }
 };
 </script>

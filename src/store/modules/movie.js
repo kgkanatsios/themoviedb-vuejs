@@ -3,7 +3,8 @@ import languages from "./languages";
 
 const state = {
   movie: [],
-  loading: false
+  loading: false,
+  videos: []
 };
 
 const mutations = {
@@ -12,6 +13,9 @@ const mutations = {
   },
   SET_MOVIE_LOADING(state, { loading }) {
     state.loading = loading;
+  },
+  SET_MOVIE_VIDEOS(state, { videos }) {
+    state.videos = videos;
   }
 };
 
@@ -33,11 +37,30 @@ const actions = {
         lang.value
     )
       .then(res => {
-        console.log(res);
         commit("SET_MOVIE", {
           movie: res.data
         });
+        commit("SET_MOVIE_VIDEOS", {
+          videos: []
+        });
         dispatch("setMovieLoading", false);
+      })
+      .catch(error => console.log(error));
+  },
+  fetchMovieVideos: ({ commit }, movieId) => {
+    let lang = languages.getters.languageCurrent(languages.state);
+    Axios.get(
+      "/movie/" +
+        movieId +
+        "/videos?api_key=" +
+        process.env.VUE_APP_TMDB_API_KEY +
+        "&language=" +
+        lang.value
+    )
+      .then(res => {
+        commit("SET_MOVIE_VIDEOS", {
+          videos: res.data.results
+        });
       })
       .catch(error => console.log(error));
   }
@@ -48,6 +71,9 @@ const getters = {
   },
   movieLoading: state => {
     return state.loading;
+  },
+  movieVideos: state => {
+    return state.videos;
   }
 };
 
