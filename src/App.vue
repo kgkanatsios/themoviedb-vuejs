@@ -17,7 +17,7 @@
                 >Home</router-link
               >
               <router-link
-                to="/movies"
+                to="/categories"
                 class="block mt-4 lg:inline-block lg:mt-0 hover:text-teal-200 text-white px-4"
                 exact
                 >Movies</router-link

@@ -29,7 +29,8 @@ const actions = {
       loading: loading
     });
   },
-  fetchLatestMovie: ({ commit }) => {
+  fetchLatestMovie: ({ commit, dispatch }) => {
+    dispatch("setMoviesLoading", true);
     let lang = languages.getters.languageCurrent(languages.state);
     Axios.get(
       "/movie/latest?api_key=" +
@@ -39,11 +40,9 @@ const actions = {
     )
       .then(res => {
         commit("SET_MOVIES", {
-          movies: res.data.results
+          movies: [res.data]
         });
-        commit("SET_MOVIES_PAGE", {
-          page: res.data.page
-        });
+        dispatch("setMoviesLoading", false);
       })
       .catch(error => console.log(error));
   },
