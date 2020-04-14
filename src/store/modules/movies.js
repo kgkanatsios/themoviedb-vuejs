@@ -3,14 +3,27 @@ import languages from "./languages";
 
 const state = {
   movies: [],
+  latestMovie: {},
+  trending: [],
   page: null,
   loading: false,
-  lists: ["now_playing", "popular", "top_rated", "upcoming"]
+  lists: [
+    { link: "now_playing", label: "Now Playing", samples: [] },
+    { link: "popular", label: "Popular", samples: [] },
+    { link: "top_rated", label: "Top Rated", samples: [] },
+    { link: "upcoming", label: "Upcoming", samples: [] }
+  ]
 };
 
 const mutations = {
   SET_MOVIES(state, { movies }) {
     state.movies = movies;
+  },
+  SET_TRENDING(state, { movies }) {
+    state.trending = movies;
+  },
+  SET_LATEST_MOVIES(state, { movie }) {
+    state.latestMovie = movie;
   },
   SET_MOVIES_PAGE(state, { page }) {
     state.page = page;
@@ -20,6 +33,10 @@ const mutations = {
   },
   SET_MOVIES_LOADING(state, { loading }) {
     state.loading = loading;
+  },
+  SET_LIST_SAMPLES(state, { listLink, samples }) {
+    let listIndex = state.lists.findIndex(list => list.link == listLink);
+    state.lists[listIndex].samples = samples;
   }
 };
 
@@ -39,19 +56,39 @@ const actions = {
         lang.value
     )
       .then(res => {
-        commit("SET_MOVIES", {
-          movies: [res.data]
+        commit("SET_LATEST_MOVIES", {
+          movie: res.data
         });
         dispatch("setMoviesLoading", false);
       })
       .catch(error => console.log(error));
   },
+  fetchListsData: ({ commit }) => {
+    let lang = languages.getters.languageCurrent(languages.state);
+    state.lists.forEach(list => {
+      Axios.get(
+        "/movie/" +
+          list.link +
+          "?api_key=" +
+          process.env.VUE_APP_TMDB_API_KEY +
+          "&language=" +
+          lang.value
+      )
+        .then(res => {
+          commit("SET_LIST_SAMPLES", {
+            listLink: list.link,
+            samples: res.data.results
+          });
+        })
+        .catch(error => console.log(error));
+    });
+  },
   fetchMovies: ({ commit, dispatch }, [listType, page = 1]) => {
     dispatch("setMoviesLoading", true);
     let lang = languages.getters.languageCurrent(languages.state);
     listType =
-      state.lists.find(list => list == listType) === undefined
-        ? state.lists[0]
+      state.lists.find(list => list.link == listType) === undefined
+        ? state.lists[0].link
         : listType;
     Axios.get(
       "/movie/" +
@@ -73,6 +110,21 @@ const actions = {
         dispatch("setMoviesLoading", false);
       })
       .catch(error => console.log(error));
+  },
+  fetchTrending: ({ commit }) => {
+    let lang = languages.getters.languageCurrent(languages.state);
+    Axios.get(
+      "/trending/movie/week?api_key=" +
+        process.env.VUE_APP_TMDB_API_KEY +
+        "&language=" +
+        lang.value
+    )
+      .then(res => {
+        commit("SET_TRENDING", {
+          movies: res.data.results
+        });
+      })
+      .catch(error => console.log(error));
   }
 };
 const getters = {
@@ -84,6 +136,15 @@ const getters = {
   },
   moviesLoading: state => {
     return state.loading;
+  },
+  latestMovie: state => {
+    return state.latestMovie;
+  },
+  lists: state => {
+    return state.lists;
+  },
+  trending: state => {
+    return state.trending;
   }
 };
 
