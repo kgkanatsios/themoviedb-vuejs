@@ -3,7 +3,7 @@
     <div v-if="!movieLoading">
       <div class="text-right my-6">
         <a
-          v-if="movie.imdb_id !== null"
+          v-if="emptyStringChecker(movie.imdb_id)"
           target="_blank"
           :href="movie.imdb_id | imdbLink"
           class="hover:text-teal-400 text-teal-500 font-bold py-2 px-4 hover:border-teal-500 inline-block align-middle"
@@ -21,16 +21,8 @@
       <div class="flex align-middle h-full mb-4">
         <div class="sm:w-1/4 sm:mr-4 w-full">
           <img
-            v-if="movie.poster_path !== null"
-            :src="'https://image.tmdb.org/t/p/original' + movie.poster_path"
+            :src="imageChecker(movie.poster_path)"
             :alt="movie.original_title"
-            class="mx-auto"
-          />
-          <img
-            v-else
-            src="../assets/logo.png"
-            :alt="movie.original_title"
-            class="mx-auto"
           />
         </div>
         <div class="sm:w-3/4 w-full items-center">
@@ -70,7 +62,7 @@
               >
             </div>
             <div
-              v-if="movie.release_date !== null && movie.release_date !== ''"
+              v-if="emptyStringChecker(movie.release_date)"
               class="flex-1 text-center align-middle m-2"
             >
               <font-awesome-icon
@@ -109,37 +101,11 @@
             <div class="w-full mb-1 text-xl font-bold text-teal-900">
               Actors
             </div>
-            <div
+            <actor-preview
               v-for="(actor, index) in credits.cast"
               :key="index"
-              class="w-1/5 flex my-1 p-1"
-            >
-              <div class="w-1/4 pr-1">
-                <img
-                  v-if="actor.profile_path !== null"
-                  :src="
-                    'https://image.tmdb.org/t/p/original' + actor.profile_path
-                  "
-                  :alt="actor.name"
-                  class="mx-auto"
-                />
-                <img
-                  v-else
-                  src="../assets/logo.png"
-                  :alt="actor.name"
-                  class="mx-auto"
-                />
-              </div>
-              <div class="w-3/4 text-sm pl-1">
-                <span class="font-bold">{{ actor.name }}</span>
-                <span
-                  v-if="actor.character !== null && actor.character != ''"
-                  class="italic"
-                >
-                  as {{ actor.character }}</span
-                >
-              </div>
-            </div>
+              :actor="actor"
+            ></actor-preview>
           </div>
           <div class="w-full my-8">
             <button
@@ -199,6 +165,9 @@
 <script>
 import { mapActions, mapGetters } from "vuex";
 import { YouTube, Vimeo } from "@/components/videos";
+import ActorPreview from "@/components/actors/ActorPreview.vue";
+import { imageChecker, emptyStringChecker } from "@/mixins";
+
 export default {
   name: "Movie",
   computed: {
@@ -230,8 +199,10 @@ export default {
   },
   components: {
     YouTube,
-    Vimeo
-  }
+    Vimeo,
+    ActorPreview
+  },
+  mixins: [imageChecker, emptyStringChecker]
 };
 </script>
 

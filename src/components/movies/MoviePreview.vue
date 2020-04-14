@@ -3,10 +3,7 @@
     <div
       class="h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
     >
-      <img
-        :src="'https://image.tmdb.org/t/p/original' + movie.poster_path"
-        :alt="movie.original_title"
-      />
+      <img :src="imageChecker(movie.poster_path)" :alt="movie.original_title" />
     </div>
     <div
       class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col w-full justify-between leading-normal"
@@ -45,9 +42,11 @@
 </template>
 
 <script>
+import { imageChecker } from "@/mixins";
 export default {
   name: "MoviePreview",
-  props: ["movie"]
+  props: ["movie"],
+  mixins: [imageChecker]
 };
 </script>
 
