@@ -1,10 +1,18 @@
 <template>
   <div class="movie-preview shadow-md flex w-full">
-    <div
-      class="h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+    <clazy-load
+      :src="imageChecker(movie.poster_path)"
+      loadedClass="h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+      loadingClass="h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
     >
       <img :src="imageChecker(movie.poster_path)" :alt="movie.original_title" />
-    </div>
+      <div slot="placeholder" class="flex justify-center h-full">
+        <font-awesome-icon
+          icon="spinner"
+          class="fa-spin text-teal-500 m-auto text-2xl"
+        ></font-awesome-icon>
+      </div>
+    </clazy-load>
     <div
       class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col w-full justify-between leading-normal"
     >

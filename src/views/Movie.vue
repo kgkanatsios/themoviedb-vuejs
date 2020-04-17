@@ -19,12 +19,22 @@
         </button>
       </div>
       <div class="flex align-middle h-full mb-4">
-        <div class="sm:w-1/4 sm:mr-4 w-full">
+        <clazy-load
+          :src="imageChecker(movie.poster_path)"
+          loadedClass="sm:w-1/4 sm:mr-4 w-full"
+          loadingClass="sm:w-1/4 sm:mr-4 w-full"
+        >
           <img
             :src="imageChecker(movie.poster_path)"
             :alt="movie.original_title"
           />
-        </div>
+          <div slot="placeholder" class="flex justify-center h-full">
+            <font-awesome-icon
+              icon="spinner"
+              class="fa-spin text-4xl text-teal-500 m-auto"
+            ></font-awesome-icon>
+          </div>
+        </clazy-load>
         <div class="sm:w-3/4 w-full items-center">
           <div class="mb-1 text-2xl font-bold text-teal-900">
             {{ movie.title }}

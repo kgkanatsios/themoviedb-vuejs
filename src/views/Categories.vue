@@ -12,18 +12,30 @@
         >
           {{ list.label }}</router-link
         >
-        <router-link :to="/categories/ + list.link" class="flex flex-wrap">
-          <span
+        <router-link
+          :to="/categories/ + list.link"
+          class="flex flex-wrap w-full"
+        >
+          <clazy-load
             v-for="(sample, index) in list.samples.slice(0, 9)"
             :key="index"
-            class="flex w-1/3"
+            :src="imageChecker(sample.poster_path)"
+            tag="span"
+            loadedClass="flex w-1/3"
+            loadingClass="flex w-1/3"
           >
             <img
               :src="imageChecker(sample.poster_path)"
               :alt="sample.original_title"
               class="opacity-50 hover:opacity-100 transition duration-200 ease-in-out"
             />
-          </span>
+            <span slot="placeholder" class="flex justify-center w-full h-full">
+              <font-awesome-icon
+                icon="spinner"
+                class="fa-spin text-teal-500 m-auto text-xl"
+              ></font-awesome-icon>
+            </span>
+          </clazy-load>
         </router-link>
         <router-link
           :to="/categories/ + list.link"
