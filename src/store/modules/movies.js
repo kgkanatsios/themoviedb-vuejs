@@ -114,7 +114,7 @@ const actions = {
   fetchTrending: ({ commit }) => {
     let lang = languages.getters.languageCurrent(languages.state);
     Axios.get(
-      "/trending/movie/week?api_key=" +
+      "/trending/movie/day?api_key=" +
         process.env.VUE_APP_TMDB_API_KEY +
         "&language=" +
         lang.value
