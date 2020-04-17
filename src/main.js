@@ -6,6 +6,9 @@ import { charactersLimiter, imdbLink } from "./filter";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { fas } from "@fortawesome/free-solid-svg-icons";
+import VueClazyLoad from "vue-clazy-load";
+
+Vue.use(VueClazyLoad);
 
 library.add(fas);
 
