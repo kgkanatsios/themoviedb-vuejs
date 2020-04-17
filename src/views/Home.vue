@@ -1,11 +1,28 @@
 <template>
   <div class="home">
-    <div class="grid gap-6 grid-cols-2">
-      <movie-preview
-        v-for="(movie, index) in trending"
-        v-bind:key="index"
-        v-bind:movie="movie"
-      ></movie-preview>
+    <div
+      class="mb-4 pb-1 border-b border-gray-400 border-gray-400 text-2xl font-bold text-teal-900"
+    >
+      Daily Movie Trends
+    </div>
+    <carousel
+      class="-mx-2 mb-8"
+      :autoplay="!0"
+      :autoplayTimeout="5000"
+      :autoplayHoverPause="!0"
+      :paginationPadding="5"
+      paginationColor="#cbd5e0"
+      paginationActiveColor="#38b2ac"
+    >
+      <slide v-for="(movie, index) in trending" :key="index" class="px-2">
+        <movie-preview :movie="movie"></movie-preview>
+      </slide>
+    </carousel>
+    <div
+      v-if="!moviesLoading"
+      class="mb-4 pb-1 border-b border-gray-400 border-gray-400 text-2xl font-bold text-teal-900"
+    >
+      The Most Newly Created Movie
     </div>
     <movie-preview v-if="!moviesLoading" :movie="latestMovie"></movie-preview>
     <div v-else class="text-center my-6">
@@ -20,6 +37,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
+import { Carousel, Slide } from "vue-carousel";
 import MoviePreview from "@/components/movies/MoviePreview.vue";
 
 export default {
@@ -49,7 +67,9 @@ export default {
     this.fetchLatestMovie();
   },
   components: {
-    MoviePreview
+    MoviePreview,
+    Carousel,
+    Slide
   }
 };
 </script>
