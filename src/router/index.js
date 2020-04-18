@@ -26,11 +26,6 @@ const routes = [
     component: () => import("../views/Movie.vue")
   },
   {
-    path: "/about",
-    name: "About",
-    component: () => import("../views/About.vue")
-  },
-  {
     path: "*",
     redirect: "/"
   }

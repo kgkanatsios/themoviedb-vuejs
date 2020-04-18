@@ -22,12 +22,6 @@
                 exact
                 >Movies</router-link
               >
-              <router-link
-                to="/about"
-                class="block mt-4 lg:inline-block lg:mt-0 hover:text-teal-200 text-white px-4"
-                exact
-                >About</router-link
-              >
             </div>
           </div>
           <div class="block flex-grow lg:items-center">
