@@ -1,14 +1,14 @@
 <template>
   <div class="categories">
-    <div class="flex -mx-2">
+    <div class="flex flex-wrap -mx-2">
       <div
         v-for="(list, index) in lists"
         :key="index"
-        class="flex-1 flex flex-wrap text-gray-700 text-center bg-gray-400 m-2"
+        class="w-1/2 sm:w-1/4 flex-col text-gray-700 text-center px-2 mb-2"
       >
         <router-link
           :to="/categories/ + list.link"
-          class="w-full text-lg p-2 transition duration-200 ease-in-out hover:bg-gray-800 hover:text-gray-200"
+          class="block bg-gray-400 text-center text-lg p-2 transition duration-200 ease-in-out hover:bg-gray-800 hover:text-gray-200"
         >
           {{ list.label }}</router-link
         >
@@ -17,12 +17,12 @@
           class="flex flex-wrap w-full"
         >
           <clazy-load
-            v-for="(sample, index) in list.samples.slice(0, 9)"
+            v-for="(sample, index) in list.samples.slice(0, 12)"
             :key="index"
             :src="imageChecker(sample.poster_path)"
             tag="span"
-            loadedClass="flex w-1/3"
-            loadingClass="flex w-1/3"
+            loadedClass="flex w-1/4"
+            loadingClass="flex w-1/4"
           >
             <img
               :src="imageChecker(sample.poster_path)"
@@ -39,7 +39,7 @@
         </router-link>
         <router-link
           :to="/categories/ + list.link"
-          class="w-full p-2 transition duration-200 ease-in-out hover:bg-gray-800 hover:text-gray-200"
+          class="block bg-gray-400 text-center p-2 transition duration-200 ease-in-out hover:bg-gray-800 hover:text-gray-200"
         >
           Show All</router-link
         >

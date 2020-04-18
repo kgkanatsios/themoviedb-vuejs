@@ -1,10 +1,11 @@
 <template>
   <div class="movies-list">
-    <div class="grid gap-6 grid-cols-2">
+    <div class="flex flex-wrap -mx-2">
       <movie-preview
         v-for="(movie, index) in movies"
         v-bind:key="index"
         v-bind:movie="movie"
+        class="w-1/2 sm:w-full lg:w-1/2 flex mb-2 px-2"
       ></movie-preview>
     </div>
     <div v-if="!moviesLoading" class="text-center my-6">

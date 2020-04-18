@@ -18,11 +18,11 @@
           Back
         </button>
       </div>
-      <div class="flex align-middle h-full mb-4">
+      <div class="flex flex-wrap align-middle h-full mb-4">
         <clazy-load
           :src="imageChecker(movie.poster_path)"
-          loadedClass="sm:w-1/4 sm:mr-4 w-full"
-          loadingClass="sm:w-1/4 sm:mr-4 w-full"
+          loadedClass="sm:w-1/4 mb-1 sm:pr-4 w-full"
+          loadingClass="sm:w-1/4 mb-1 sm:pr-4 w-full"
         >
           <img
             :src="imageChecker(movie.poster_path)"
@@ -31,7 +31,7 @@
           <div slot="placeholder" class="flex justify-center h-full">
             <font-awesome-icon
               icon="spinner"
-              class="fa-spin text-4xl text-teal-500 m-auto"
+              class="fa-spin text-4xl text-teal-500 mx-auto"
             ></font-awesome-icon>
           </div>
         </clazy-load>
@@ -125,12 +125,13 @@
             >
               Load Videos
             </button>
-            <div class="grid gap-6 grid-cols-2">
+            <div class="flex flex-wrap -mx-2">
               <component
                 v-for="(video, index) in movieVideos"
                 :is="video.site"
                 v-bind:video="video"
                 v-bind:key="index"
+                class="px-2 w-full sm:w-1/2 md:w-1/3 mb-2"
               />
             </div>
             <div

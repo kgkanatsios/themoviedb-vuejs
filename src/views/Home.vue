@@ -14,7 +14,7 @@
       paginationColor="#cbd5e0"
       paginationActiveColor="#38b2ac"
     >
-      <slide v-for="(movie, index) in trending" :key="index" class="px-2">
+      <slide v-for="(movie, index) in trending" :key="index" class="px-2 flex">
         <movie-preview :movie="movie"></movie-preview>
       </slide>
     </carousel>

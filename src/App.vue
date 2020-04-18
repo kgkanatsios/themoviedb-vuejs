@@ -3,31 +3,28 @@
     <div class="bg-black shadow-md mb-4">
       <div class="container mx-auto">
         <nav class="flex items-center justify-between flex-wrap p-3">
-          <div class="flex items-center flex-shrink-0 text-teal-400 mr-6">
-            <span class="font-semibold text-xl tracking-tight"
+          <div
+            class="flex w-full sm:w-auto mb-2 items-center flex-shrink-0 text-teal-400"
+          >
+            <span class="font-semibold text-xl tracking-tight m-auto"
               >The Movie DB API - VueJS</span
             >
           </div>
-          <div class="w-full block flex-grow lg:flex lg:items-center lg:w-auto">
-            <div class="text-lg lg:flex-grow">
-              <router-link
-                to="/"
-                class="block mt-4 lg:inline-block lg:mt-0 hover:text-teal-200 text-white px-4"
-                exact
-                >Home</router-link
-              >
-              <router-link
-                to="/categories"
-                class="block mt-4 lg:inline-block lg:mt-0 hover:text-teal-200 text-white px-4"
-                exact
-                >Movies</router-link
-              >
-            </div>
+          <div class="flex w-1/2 sm:w-auto justify-center">
+            <router-link to="/" class="hover:text-teal-200 text-white p-2" exact
+              >Home</router-link
+            >
+            <router-link
+              to="/categories"
+              class="hover:text-teal-200 text-white p-2"
+              exact
+              >Movies</router-link
+            >
           </div>
-          <div class="block flex-grow lg:items-center">
+          <div class="flex w-1/2 sm:w-auto justify-center">
             <select
               @change="updateCurrentLanguage($event)"
-              class="float-right appearance-none bg-gray-200 border border-gray-200 text-gray-700 py-2 px-2 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500"
+              class="text-center appearance-none bg-gray-200 border border-gray-200 text-gray-700 p-1 rounded focus:outline-none focus:bg-white focus:border-gray-500"
             >
               <option
                 v-for="(language, index) in languageList"
@@ -41,7 +38,7 @@
         </nav>
       </div>
     </div>
-    <div class="container mx-auto">
+    <div class="container mx-auto px-3 pb-3">
       <router-view />
     </div>
   </div>

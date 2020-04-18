@@ -1,12 +1,16 @@
 <template>
-  <div class="movie-preview shadow-md flex w-full">
+  <div class="movie-preview sm:flex-no-wrap flex flex-wrap">
     <clazy-load
       :src="imageChecker(movie.poster_path)"
-      loadedClass="h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-      loadingClass="h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+      loadedClass="flex w-full border border-gray-400 sm:border-r-0 sm:w-1/3 rounded-t sm:rounded-t-none sm:rounded-l text-center overflow-hidden"
+      loadingClass="flex w-full sm:w-1/3 rounded-t sm:rounded-t-none sm:rounded-l text-center overflow-hidden"
     >
-      <img :src="imageChecker(movie.poster_path)" :alt="movie.original_title" />
-      <div slot="placeholder" class="flex justify-center h-full">
+      <img
+        class="self-center m-auto"
+        :src="imageChecker(movie.poster_path)"
+        :alt="movie.original_title"
+      />
+      <div slot="placeholder" class="flex justify-center h-full w-full">
         <font-awesome-icon
           icon="spinner"
           class="fa-spin text-teal-500 m-auto text-2xl"
@@ -14,7 +18,7 @@
       </div>
     </clazy-load>
     <div
-      class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col w-full justify-between leading-normal"
+      class="w-full sm:w-2/3 border-r border-b border-l border-gray-400 sm:border-l-0 sm:border-t sm:border-gray-400 bg-white rounded-b sm:rounded-b-none sm:rounded-r p-4 flex flex-col justify-between leading-normal"
     >
       <div class="pb-2">
         <p

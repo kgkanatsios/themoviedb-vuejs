@@ -1,5 +1,5 @@
 <template>
-  <div class="w-1/5 flex my-1 p-1">
+  <div class="w-1/3 sm:w-1/3 md:w-1/4 lg:w-1/5 flex my-1 p-1">
     <clazy-load
       :src="imageChecker(actor.profile_path)"
       loadedClass="w-1/4 pr-1"
